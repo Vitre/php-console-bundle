@@ -22,25 +22,25 @@ Configuration
 
 vitre_php_console:
     enabled: true
-    source_base_path: %kernel.root%
+    source_base_path: %kernel.root_dir%
     encoding: utf-8
-    ip_masks: [192.168.*.*]
-    password: 
+    ip: [192.168.*.*]
+    password: pass
     ssl_only: false
     handle:
         errors: true
         exceptions: true
         forward: true
     auto_log:
-        $_SERVER
-        $_SESSION
-        $_REQUEST
-        site_bundle
+        - $_SERVER
+        - $_SESSION
+        - $_REQUEST
+        - demo_logger
     eval_dispatcher:
         enabled: true
         shared:
-            post: $_POST
+            - $_POST
         open_base_dirs:
-            []
+            [%kernel.root_dir%]
 
 ```

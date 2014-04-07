@@ -26,18 +26,24 @@ class Connection extends ContainerAware
 
     protected function configure()
     {
-        $this->connection->setSourcesBasePath($this->container->get('kernel')->getRootDir());
-        //$this->connection->setPassword('aaa', true);
-        //$this->connection->setAllowedIpMasks(array('192.168.*.*'));
-        //$this->connection->getDebugDispatcher()->detectTraceAndSource = true;
+        $this->connection->setSourcesBasePath($this->container->getParameter('vitre_php_console.source_base_path'));
+        if ($this->container->getParameter('vitre_php_console.password')) {
+            $this->connection->setPassword($this->container->getParameter('vitre_php_console.password'), true);
+        }
+        if ($this->container->getParameter('vitre_php_console.ip')) {
+            $this->connection->setAllowedIpMasks($this->container->getParameter('vitre_php_console.ip'));
+        }
+        if ($this->container->getParameter('vitre_php_console.detect_trace_and_source')) {
+            $this->connection->getDebugDispatcher()->detectTraceAndSource = $this->container->getParameter('vitre_php_console.detect_trace_and_source');
+        }
     }
 
     protected function initHandler()
     {
         $this->handler = Handler::getInstance();
-        $this->handler->setHandleExceptions(false); // disable exceptions handling
-        //$this->handler->setHandleErrors(true); // disable errors handling
-        $this->handler->setCallOldHandlers(true); // disable passing errors & exceptions to prviously defined handlers
+        $this->handler->setHandleExceptions($this->container->getParameter('vitre_php_console.handle.exceptions')); // disable exceptions handling
+        $this->handler->setHandleErrors($this->container->getParameter('vitre_php_console.handle.errors')); // disable errors handling
+        $this->handler->setCallOldHandlers($this->container->getParameter('vitre_php_console.handle.forward')); // disable passing errors & exceptions to prviously defined handlers
         $this->handler->start();
     }
 

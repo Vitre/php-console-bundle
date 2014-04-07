@@ -20,9 +20,30 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('vitre_php_console');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode->children()
+            ->booleanNode('enabled')->defaultFalse()->end()
+            ->scalarNode('source_base_path')->defaultValue('%kernel.root_dir%')->end()
+            ->scalarNode('encoding')->defaultValue('%kernel.charset%')->end()
+            ->arrayNode('ip')->prototype('scalar')->end()->end()
+            ->scalarNode('password')->end()
+            ->booleanNode('ssl_only')->defaultFalse()->end()
+            ->booleanNode('detect_trace_and_source')->defaultFalse()->end()
+            ->arrayNode('handle')
+                ->children()
+                    ->booleanNode('errors')->defaultFalse()->end()
+                    ->booleanNode('exceptions')->defaultFalse()->end()
+                    ->booleanNode('forward')->defaultTrue()->end()
+                ->end()
+            ->end()
+            ->arrayNode('auto_log')->prototype('scalar')->end()->end()
+            ->arrayNode('eval_dispatcher')
+                ->children()
+                    ->booleanNode('enabled')->defaultFalse()->end()
+                    ->arrayNode('shared')->prototype('scalar')->end()->end()
+                    ->arrayNode('open_base_dirs')->prototype('scalar')->end()->end()
+                ->end()
+            ->end()
+        ->end();
 
         return $treeBuilder;
     }
