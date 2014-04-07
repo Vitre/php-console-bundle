@@ -28,7 +28,9 @@ class Connection extends ContainerAware
     protected function configure()
     {
         $this->connection->setSourcesBasePath($this->container->getParameter('vitre_php_console.source_base_path'));
-
+        if ($this->container->getParameter('vitre_php_console.ssl_only')) {
+            $this->connection->enableSslOnlyMode($this->container->getParameter('vitre_php_console.ssl_only'));
+        }
         if ($this->container->getParameter('vitre_php_console.encoding')) {
             $this->connection->setServerEncoding($this->container->getParameter('vitre_php_console.encoding'));
         }
@@ -62,7 +64,7 @@ class Connection extends ContainerAware
     {
         if ($this->connection === false) {
 
-            $this->initSession();
+            //$this->initSession();
 
             $this->connection = Connector::getInstance();
 
@@ -84,7 +86,7 @@ class Connection extends ContainerAware
 
     public function log() {
         if ($this->container->getParameter('vitre_php_console.enabled')) {
-            call_user_func_array([$this->connection->getDebugDispatcher(), 'dispatchDebug'], func_get_args());
+            call_user_func_array([$this->connection->getDebugDispatcher(), 'dispatchDebug'], func_get_args(), 1);
         }
 
         return $this;
