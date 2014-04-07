@@ -25,7 +25,7 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('source_base_path')->defaultValue('%kernel.root_dir%')->end()
             ->scalarNode('encoding')->defaultValue('%kernel.charset%')->end()
             ->arrayNode('ip')->prototype('scalar')->end()->end()
-            ->scalarNode('password')->end()
+            ->scalarNode('password')->defaultFalse()->end()
             ->booleanNode('ssl_only')->defaultFalse()->end()
             ->booleanNode('detect_trace_and_source')->defaultFalse()->end()
             ->arrayNode('handle')

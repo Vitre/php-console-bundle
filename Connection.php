@@ -19,14 +19,19 @@ class Connection extends ContainerAware
 
         $this->setContainer($container);
 
-        $this->connect();
-
-        PhpConsole\Helper::register();
+        if ($this->container->getParameter('vitre_php_console.enabled')) {
+            $this->connect();
+            PhpConsole\Helper::register();
+        }
     }
 
     protected function configure()
     {
         $this->connection->setSourcesBasePath($this->container->getParameter('vitre_php_console.source_base_path'));
+
+        if ($this->container->getParameter('vitre_php_console.encoding')) {
+            $this->connection->setServerEncoding($this->container->getParameter('vitre_php_console.encoding'));
+        }
         if ($this->container->getParameter('vitre_php_console.password')) {
             $this->connection->setPassword($this->container->getParameter('vitre_php_console.password'), true);
         }
@@ -78,8 +83,9 @@ class Connection extends ContainerAware
     }
 
     public function log() {
-
-        call_user_func_array([$this->connection->getDebugDispatcher(), 'dispatchDebug'], func_get_args());
+        if ($this->container->getParameter('vitre_php_console.enabled')) {
+            call_user_func_array([$this->connection->getDebugDispatcher(), 'dispatchDebug'], func_get_args());
+        }
 
         return $this;
     }
