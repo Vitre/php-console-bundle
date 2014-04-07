@@ -3,6 +3,17 @@ php-console-bundle
 
 Symfony PHP console bundle
 
+Component
+---------
+
+https://github.com/barbushin/php-console
+
+Google Chrome extension
+-----------------------
+
+https://chrome.google.com/webstore/detail/php-console/nfhmhhlpfleoednkpnnnkolmclajemef
+
+
 Configuration
 -------------
 
