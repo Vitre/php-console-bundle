@@ -3,6 +3,7 @@ php-console-bundle
 
 Symfony PHP console bundle
 
+
 Component
 ---------
 
@@ -13,14 +14,30 @@ Google Chrome extension
 
 https://chrome.google.com/webstore/detail/php-console/nfhmhhlpfleoednkpnnnkolmclajemef
 
+
 Install
 ------------
 
+### Packagist
+
 https://packagist.org/packages/vitre/php-console-bundle
+
+### Composer
 
 ```bash
 composer require vitre/php-console-bundle dev-master
 ```
+
+### Symfony 
+
+AppKernel.php
+```php
+...
+new Vitre\PhpConsoleBundle\VitrePhpConsoleBundle(),
+...
+
+```
+
 
 Configuration
 -------------
