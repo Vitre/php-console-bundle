@@ -13,6 +13,14 @@ Google Chrome extension
 
 https://chrome.google.com/webstore/detail/php-console/nfhmhhlpfleoednkpnnnkolmclajemef
 
+Install
+------------
+
+https://packagist.org/packages/vitre/php-console-bundle
+
+```bash
+composer require vitre/php-console-bundle dev-master
+```
 
 Configuration
 -------------
