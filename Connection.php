@@ -56,7 +56,11 @@ class Connection extends ContainerAware
 
     protected function initSession()
     {
-        $file = $this->container->get('kernel')->getRootDir() . '/tmp/pc.data';
+        $root = $this->container->get('kernel')->getRootDir() . '/tmp';
+        if (!is_dir($root)) {
+            mkdir($root);
+        }
+        $file = $root . '/vitre_php_console.data';
         Connector::setPostponeStorage(new \PhpConsole\Storage\File($file));
     }
 
@@ -64,7 +68,7 @@ class Connection extends ContainerAware
     {
         if ($this->connection === false) {
 
-            //$this->initSession();
+            $this->initSession();
 
             $this->connection = Connector::getInstance();
 
@@ -86,7 +90,8 @@ class Connection extends ContainerAware
 
     public function log() {
         if ($this->container->getParameter('vitre_php_console.enabled')) {
-            call_user_func_array([$this->connection->getDebugDispatcher(), 'dispatchDebug'], func_get_args(), 1);
+            $args = func_get_args();
+            call_user_func_array([$this->connection->getDebugDispatcher(), 'dispatchDebug'], $args);
         }
 
         return $this;
