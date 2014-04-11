@@ -69,3 +69,10 @@ vitre_php_console:
             [%kernel.root_dir%]
 
 ```
+
+Logging
+-------
+
+```php
+$this->getContainer()->get('vitre_php_console.connection')->log($var);
+```
