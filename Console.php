@@ -55,6 +55,11 @@ class Console extends ContainerAware
         }
     }
 
+    public function getContainer()
+    {
+        return $this->container;
+    }
+
     public function log()
     {
         if ($this->getEnabled()) {

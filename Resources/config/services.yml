@@ -1,7 +1,7 @@
 parameters:
-    vitre_php_console.connection.class: Vitre\PhpConsoleBundle\Connection
+    vitre_php_console.console.class: Vitre\PhpConsoleBundle\Console
 
 services:
-    vitre_php_console.connection:
-        class: %vitre_php_console.connection.class%
+    vitre_php_console:
+        class: %vitre_php_console.console.class%
         arguments: [@service_container]

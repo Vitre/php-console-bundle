@@ -23,7 +23,7 @@ class VitrePhpConsoleExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         // enabled
-        $container->setParameter('vitre_php_console.enabled', $config['enabled'] && in_array($this->getEnvironment(), array('dev', 'test')));
+        $container->setParameter('vitre_php_console.enabled', $config['enabled'] && in_array($container->getParameter('kernel.environment'), array('dev', 'test')));
 
         $container->setParameter('vitre_php_console.source_base_path', $config['source_base_path']);
         $container->setParameter('vitre_php_console.encoding', $config['encoding']);
@@ -43,14 +43,14 @@ class VitrePhpConsoleExtension extends Extension
         if (isset($config['handle']['exceptions'])) {
             $container->setParameter('vitre_php_console.handle.exceptions', $config['handle']['exceptions']);
         } else {
-            $container->setParameter('vitre_php_console.handle.exceptions', false);   
+            $container->setParameter('vitre_php_console.handle.exceptions', false);
         }
 
         // handle exceptions
         if (isset($config['handle']['forward'])) {
             $container->setParameter('vitre_php_console.handle.forward', $config['handle']['forward']);
         } else {
-            $container->setParameter('vitre_php_console.handle.forward', true);   
+            $container->setParameter('vitre_php_console.handle.forward', true);
         }
 
         // autolog

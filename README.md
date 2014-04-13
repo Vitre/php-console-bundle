@@ -1,5 +1,5 @@
-php-console-bundle
-==================
+vitre-php-console-bundle
+========================
 
 Symfony PHP console bundle
 

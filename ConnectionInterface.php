@@ -12,4 +12,6 @@ interface ConnectionInterface
 
     public function log();
 
+    public function getConsole();
+
 }
