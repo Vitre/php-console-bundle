@@ -32,9 +32,7 @@ composer require vitre/php-console-bundle dev-master
 
 AppKernel.php
 ```php
-...
 new Vitre\PhpConsoleBundle\VitrePhpConsoleBundle(),
-...
 
 ```
 
@@ -56,11 +54,15 @@ vitre_php_console:
         errors: true
         exceptions: true
         forward: true
+
+    # not implemented
     auto_log:
         - $_SERVER
         - $_SESSION
         - $_REQUEST
-        - demo_logger
+        - demo_logger #custom autolog callback
+
+    # not implemented
     eval_dispatcher:
         enabled: true
         shared:
@@ -74,7 +76,7 @@ Logging
 -------
 
 ```php
-$this->getContainer()->get('vitre_php_console.connection')->log($var);
+$this->getContainer()->get('vitre_php_console')->log($var);
 ```
 
 Temporary file

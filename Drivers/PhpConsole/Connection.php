@@ -1,58 +1,37 @@
 <?php
 
-namespace Vitre\PhpConsoleBundle;
+namespace Vitre\PhpConsoleBundle\Drivers\PhpConsole;
 
 use PhpConsole;
 use PhpConsole\Connector;
 use PhpConsole\Handler;
 use Symfony\Component\DependencyInjection\ContainerAware;
+use Vitre\PhpConsoleBundle\ConnectionInterface;
 
-class Connection extends ContainerAware
+class Connection extends ContainerAware implements ConnectionInterface
 {
 
     protected $connection = false;
 
     protected $handler = false;
 
-    private $enabled = false;
+    protected $console;
 
     //---
 
-    public function __construct($container)
+    public function __construct($console)
     {
 
-        $this->setContainer($container);
+        $this->console = $console;
 
-        $this->initEnabled();
-
-        if ($this->getEnabled()) {
-
-            $this->connect();
-
-            PhpConsole\Helper::register();
-        }
-    }
-
-    public function initEnabled()
-    {
-        $this->setEnabled($this->container->getParameter('vitre_php_console.enabled'));
-    }
-
-    public function getEnabled()
-    {
-        return $this->enabled;
-    }
-
-    public function setEnabled($value)
-    {
-        $this->enabled = $value;
+        $this->setContainer($console->getContainer());
 
         return $this;
     }
 
     public function connect()
     {
-        if ($this->getEnabled() && ($this->connection === false)) {
+        if ($this->connection === false) {
 
             $this->initSession();
 
@@ -61,6 +40,8 @@ class Connection extends ContainerAware
             $this->configure();
 
             $this->initHandler();
+
+            PhpConsole\Helper::register();
         }
     }
 
@@ -129,10 +110,7 @@ class Connection extends ContainerAware
     public function log()
     {
         $args = func_get_args();
-
-        if ($this->getEnabled()) {
-            call_user_func_array([$this->connection->getDebugDispatcher(), 'dispatchDebug'], $args);
-        }
+        call_user_func_array([$this->connection->getDebugDispatcher(), 'dispatchDebug'], $args);
 
         return $this;
     }
