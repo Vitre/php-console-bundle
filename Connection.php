@@ -28,7 +28,7 @@ class Connection extends ContainerAware
         if ($this->getEnabled()) {
 
             $this->connect();
-            
+
             PhpConsole\Helper::register();
         }
     }
@@ -48,6 +48,43 @@ class Connection extends ContainerAware
         $this->enabled = $value;
 
         return $this;
+    }
+
+    public function connect()
+    {
+        if ($this->getEnabled() && ($this->connection === false)) {
+
+            $this->initSession();
+
+            $this->connection = Connector::getInstance();
+
+            $this->configure();
+
+            $this->initHandler();
+        }
+    }
+
+    protected function initSession()
+    {
+        $root = $this->initTmpDir();
+        if ($root) {
+            $file = $root . '/vitre_php_console.data';
+            Connector::setPostponeStorage(new \PhpConsole\Storage\File($file));
+        }
+    }
+
+    protected function initTmpDir()
+    {
+        $ok = false;
+        $root = $this->container->get('kernel')->getRootDir() . '/tmp';
+        if (!is_dir($root)) {
+            $ok = mkdir($root);
+        }
+        if ($ok) {
+            return $root;
+        } else {
+            return false;
+        }
     }
 
     protected function configure()
@@ -79,30 +116,6 @@ class Connection extends ContainerAware
         $this->handler->start();
     }
 
-    protected function initSession()
-    {
-        $root = $this->container->get('kernel')->getRootDir() . '/tmp';
-        if (!is_dir($root)) {
-            mkdir($root);
-        }
-        $file = $root . '/vitre_php_console.data';
-        Connector::setPostponeStorage(new \PhpConsole\Storage\File($file));
-    }
-
-    public function connect()
-    {
-        if ($this->connection === false) {
-
-            $this->initSession();
-
-            $this->connection = Connector::getInstance();
-
-            $this->configure();
-
-            $this->initHandler();
-        }
-    }
-
     public function getConnection()
     {
         return $this->connection;
@@ -113,9 +126,11 @@ class Connection extends ContainerAware
         return $this->handler;
     }
 
-    public function log() {
-        if ($this->container->getParameter('vitre_php_console.enabled')) {
-            $args = func_get_args();
+    public function log()
+    {
+        $args = func_get_args();
+
+        if ($this->getEnabled()) {
             call_user_func_array([$this->connection->getDebugDispatcher(), 'dispatchDebug'], $args);
         }
 
