@@ -18,7 +18,7 @@ Drivers
  - https://github.com/ccampbell/chromephp
  - https://packagist.org/packages/ccampbell/chromephp
  - https://chrome.google.com/extensions/detail/noaneddfkdjfnfdakjjmocngnfkfehhd
- 
+
 
 Install
 ------------
@@ -31,7 +31,7 @@ https://packagist.org/packages/vitre/php-console-bundle
 composer require vitre/php-console-bundle dev-master
 ```
 
-### Symfony 
+### Symfony
 
 AppKernel.php
 
@@ -51,6 +51,8 @@ vitre_php_console:
     driver: php_console
     source_base_path: %kernel.root_dir%
     encoding: utf-8
+
+    # not implemented for chrome logger
     ip: [192.168.*.*]
     password: pass
     ssl_only: false
