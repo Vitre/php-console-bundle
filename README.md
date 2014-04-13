@@ -23,11 +23,9 @@ Drivers
 Install
 ------------
 
-### Packagist
+### Composer
 
 https://packagist.org/packages/vitre/php-console-bundle
-
-### Composer
 
 ```bash
 composer require vitre/php-console-bundle dev-master
