@@ -7,8 +7,9 @@ use PhpConsole\Connector;
 use PhpConsole\Handler;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Vitre\PhpConsoleBundle\ConnectionInterface;
+use Vitre\PhpConsoleBundle\AbstractConnection;
 
-class Connection implements ConnectionInterface
+class Connection extends AbstractConnection implements ConnectionInterface
 {
 
     protected $connection = false;
@@ -21,7 +22,6 @@ class Connection implements ConnectionInterface
 
     public function __construct($console)
     {
-
         $this->console = $console;
 
         return $this;

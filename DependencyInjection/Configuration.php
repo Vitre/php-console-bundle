@@ -23,6 +23,8 @@ class Configuration implements ConfigurationInterface
         $rootNode->children()
             ->booleanNode('enabled')
                 ->defaultFalse()->end()
+            ->scalarNode('driver')
+                ->defaultValue('php_console')->end()
             ->scalarNode('source_base_path')
                 ->defaultValue('%kernel.root_dir%')->end()
             ->scalarNode('encoding')

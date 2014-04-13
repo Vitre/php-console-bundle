@@ -3,12 +3,15 @@
 namespace Vitre\PhpConsoleBundle;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\DependencyInjection\Container;
 
 class Console extends ContainerAware
 {
     protected $connection = false;
 
     private $enabled = false;
+
+    private $driver = 'php_console';
 
     //---
 
@@ -18,6 +21,7 @@ class Console extends ContainerAware
         $this->setContainer($container);
 
         $this->initEnabled();
+        $this->initDriver();
 
         if ($this->getEnabled()) {
 
@@ -31,6 +35,11 @@ class Console extends ContainerAware
     public function initEnabled()
     {
         $this->setEnabled($this->container->getParameter('vitre_php_console.enabled'));
+    }
+
+    public function initDriver()
+    {
+        $this->driver = $this->container->getParameter('vitre_php_console.driver');
     }
 
     public function getEnabled()
@@ -50,9 +59,19 @@ class Console extends ContainerAware
         if ($this->connection === false) {
 
             // PHP console driver
-            $this->connection = new Drivers\PhpConsole\Connection($this);
-            $this->connection->connect();
+            $driverName = Container::camelize($this->driver);
+            $class = __NAMESPACE__ . '\\Drivers\\' . $driverName . '\\Connection';
+            if (class_exists($class)) {
+                $this->connection = new $class($this);
+                $this->connection->connect();
+
+                return $this->connection;
+            } else {
+                trigger_error('PHP console driver "' . $class . '" not exists.', \E_USER_ERROR);
+            }
         }
+
+        return false;
     }
 
     public function getContainer()

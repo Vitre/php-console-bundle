@@ -25,6 +25,9 @@ class VitrePhpConsoleExtension extends Extension
         // enabled
         $container->setParameter('vitre_php_console.enabled', $config['enabled'] && in_array($container->getParameter('kernel.environment'), array('dev', 'test')));
 
+        // driver
+        $container->setParameter('vitre_php_console.driver', $config['driver']);
+
         $container->setParameter('vitre_php_console.source_base_path', $config['source_base_path']);
         $container->setParameter('vitre_php_console.encoding', $config['encoding']);
         $container->setParameter('vitre_php_console.ip', $config['ip']);

@@ -4,16 +4,21 @@ vitre-php-console-bundle
 Symfony PHP console bundle
 
 
-Component
----------
+Drivers
+-------
 
-https://github.com/barbushin/php-console
+### php_conosle
 
-Google Chrome extension
------------------------
+ - https://github.com/barbushin/php-console
+ - https://packagist.org/packages/php-console/php-console
+ - https://chrome.google.com/webstore/detail/php-console/nfhmhhlpfleoednkpnnnkolmclajemef
 
-https://chrome.google.com/webstore/detail/php-console/nfhmhhlpfleoednkpnnnkolmclajemef
+### chrome_logger
 
+ - https://github.com/ccampbell/chromephp
+ - https://packagist.org/packages/ccampbell/chromephp
+ - https://chrome.google.com/extensions/detail/noaneddfkdjfnfdakjjmocngnfkfehhd
+ 
 
 Install
 ------------
@@ -45,6 +50,7 @@ Configuration
 
 vitre_php_console:
     enabled: true
+    driver: php_console
     source_base_path: %kernel.root_dir%
     encoding: utf-8
     ip: [192.168.*.*]
