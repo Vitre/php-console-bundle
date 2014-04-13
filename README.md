@@ -34,9 +34,9 @@ composer require vitre/php-console-bundle dev-master
 ### Symfony 
 
 AppKernel.php
+
 ```php
 new Vitre\PhpConsoleBundle\VitrePhpConsoleBundle(),
-
 ```
 
 
