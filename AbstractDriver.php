@@ -2,7 +2,7 @@
 
 namespace Vitre\PhpConsoleBundle;
 
-abstract class AbstractConnection
+abstract class AbstractDriver
 {
 
     protected $connection = false;

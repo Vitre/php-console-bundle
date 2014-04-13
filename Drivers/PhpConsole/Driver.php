@@ -5,11 +5,10 @@ namespace Vitre\PhpConsoleBundle\Drivers\PhpConsole;
 use PhpConsole;
 use PhpConsole\Connector;
 use PhpConsole\Handler;
-use Symfony\Component\DependencyInjection\ContainerAware;
-use Vitre\PhpConsoleBundle\ConnectionInterface;
-use Vitre\PhpConsoleBundle\AbstractConnection;
+use Vitre\PhpConsoleBundle\DriverInterface;
+use Vitre\PhpConsoleBundle\AbstractDriver;
 
-class Connection extends AbstractConnection implements ConnectionInterface
+class Driver extends AbstractDriver implements DriverInterface
 {
 
     protected $connection = false;
@@ -125,5 +124,24 @@ class Connection extends AbstractConnection implements ConnectionInterface
         return $this;
     }
 
+    public function info()
+    {
+        return call_user_func_array([__CLASS__, 'log'], func_get_args());
+    }
+
+    public function group()
+    {
+        return call_user_func_array([__CLASS__, 'log'], func_get_args());
+    }
+
+    public function groupEnd()
+    {
+
+    }
+
+    public function table()
+    {
+        return call_user_func_array([__CLASS__, 'log'], func_get_args());
+    }
 
 }

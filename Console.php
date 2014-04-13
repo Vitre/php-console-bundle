@@ -11,7 +11,7 @@ class Console extends ContainerAware
 
     private $enabled = false;
 
-    private $driver = 'php_console';
+    private $driver = false;
 
     //---
 
@@ -21,7 +21,6 @@ class Console extends ContainerAware
         $this->setContainer($container);
 
         $this->initEnabled();
-        $this->initDriver();
 
         if ($this->getEnabled()) {
 
@@ -35,11 +34,6 @@ class Console extends ContainerAware
     public function initEnabled()
     {
         $this->setEnabled($this->container->getParameter('vitre_php_console.enabled'));
-    }
-
-    public function initDriver()
-    {
-        $this->driver = $this->container->getParameter('vitre_php_console.driver');
     }
 
     public function getEnabled()
@@ -56,22 +50,31 @@ class Console extends ContainerAware
 
     public function connect()
     {
-        if ($this->connection === false) {
+        if ($this->driver === false) {
 
-            // PHP console driver
-            $driverName = Container::camelize($this->driver);
-            $class = __NAMESPACE__ . '\\Drivers\\' . $driverName . '\\Connection';
-            if (class_exists($class)) {
-                $this->connection = new $class($this);
-                $this->connection->connect();
+            $this->initDriver();
 
-                return $this->connection;
-            } else {
-                trigger_error('PHP console driver "' . $class . '" not exists.', \E_USER_ERROR);
-            }
         }
 
         return false;
+    }
+
+    protected function initDriver()
+    {
+        $this->driver = $this->container->getParameter('vitre_php_console.driver');
+
+        $driverName = Container::camelize($this->driver);
+        $class = __NAMESPACE__ . '\\Drivers\\' . $driverName . '\\Driver';
+
+        if (class_exists($class)) {
+            $this->driver = new $class($this);
+            $this->driver->connect();
+
+            return $this->driver;
+
+        } else {
+            trigger_error('PHP console driver "' . $class . '" not exists.', \E_USER_ERROR);
+        }
     }
 
     public function getContainer()
@@ -82,14 +85,50 @@ class Console extends ContainerAware
     public function log()
     {
         if ($this->getEnabled()) {
-            return call_user_func_array([$this->getConnection(), 'log'], func_get_args());
+            return call_user_func_array([$this->getDriver(), 'log'], func_get_args());
         }
 
         return false;
     }
 
-    public function getConnection()
+    public function table()
     {
-        return $this->connection;
+        if ($this->getEnabled()) {
+            return call_user_func_array([$this->getDriver(), 'table'], func_get_args());
+        }
+
+        return false;
+    }
+
+    public function group()
+    {
+        if ($this->getEnabled()) {
+            return call_user_func_array([$this->getDriver(), 'group'], func_get_args());
+        }
+
+        return false;
+    }
+
+    public function groupEnd()
+    {
+        if ($this->getEnabled()) {
+            return call_user_func_array([$this->getDriver(), 'groupEnd'], func_get_args());
+        }
+
+        return false;
+    }
+
+    public function info()
+    {
+        if ($this->getEnabled()) {
+            return call_user_func_array([$this->getDriver(), 'info'], func_get_args());
+        }
+
+        return false;
+    }
+
+    public function getDriver()
+    {
+        return $this->driver;
     }
 }

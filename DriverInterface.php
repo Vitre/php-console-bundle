@@ -3,7 +3,7 @@
 
 namespace Vitre\PhpConsoleBundle;
 
-interface ConnectionInterface
+interface DriverInterface
 {
 
     public function __construct($console);
@@ -13,5 +13,13 @@ interface ConnectionInterface
     public function log();
 
     public function getConsole();
+
+    public function group();
+
+    public function groupEnd();
+
+    public function table();
+
+    public function info();
 
 }
