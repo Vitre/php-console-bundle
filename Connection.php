@@ -14,15 +14,40 @@ class Connection extends ContainerAware
 
     protected $handler = false;
 
+    private $enabled = false;
+
+    //---
+
     public function __construct($container)
     {
 
         $this->setContainer($container);
 
-        if ($this->container->getParameter('vitre_php_console.enabled')) {
+        $this->initEnabled();
+
+        if ($this->getEnabled()) {
+
             $this->connect();
+            
             PhpConsole\Helper::register();
         }
+    }
+
+    public function initEnabled()
+    {
+        $this->setEnabled($this->container->getParameter('vitre_php_console.enabled'));
+    }
+
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled($value)
+    {
+        $this->enabled = $value;
+
+        return $this;
     }
 
     protected function configure()
