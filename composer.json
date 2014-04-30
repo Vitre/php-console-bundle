@@ -11,6 +11,6 @@
     "autoload": {
         "psr-0": { "Vitre\\PhpConsoleBundle": "" }
     },
-    "target-dir": "vitre/PhpConsoleBundle",
-    "minimum-stability": "alpha"
+    "target-dir": "Vitre/PhpConsoleBundle",
+    "minimum-stability": "stable"
 }
