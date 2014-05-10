@@ -131,4 +131,13 @@ class Console extends ContainerAware
     {
         return $this->driver;
     }
+
+    public function query($query, $name)
+    {
+        $this->group($name);
+        $this->log('[DQL]', $query->getDQL());
+        $this->log('[SQL]', $query->getSQL());
+        $this->groupEnd();
+    }
+
 }
