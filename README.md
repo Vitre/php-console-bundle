@@ -7,7 +7,7 @@ Symfony PHP console bundle
 Drivers
 -------
 
-### php_conosle
+### php_console
 
  - https://github.com/barbushin/php-console
  - https://packagist.org/packages/php-console/php-console
