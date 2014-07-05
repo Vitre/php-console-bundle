@@ -101,27 +101,16 @@ class Driver extends AbstractDriver implements DriverInterface
         $this->handler->start();
     }
 
-    public function getConnection()
-    {
-        return $this->connection;
-    }
-
-    public function getConsole()
-    {
-        return $this->console;
-    }
-
-    public function getHandler()
-    {
-        return $this->handler;
-    }
-
     public function log()
     {
         $args = func_get_args();
         call_user_func_array([$this->connection->getDebugDispatcher(), 'dispatchDebug'], $args);
 
         return $this;
+    }
+
+    public function warn() {
+        return call_user_func_array([__CLASS__, 'log'], func_get_args());
     }
 
     public function info()

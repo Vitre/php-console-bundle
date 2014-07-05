@@ -103,6 +103,15 @@ class Console extends ContainerAware
         return false;
     }
 
+    public function warn()
+    {
+        if ($this->enabled()) {
+            return call_user_func_array([$this->getDriver(), 'warn'], func_get_args());
+        }
+
+        return false;
+    }
+
     public function table()
     {
         if ($this->enabled()) {

@@ -12,6 +12,8 @@ interface DriverInterface
 
     public function log();
 
+    public function warn();
+
     public function getConsole();
 
     public function group();
