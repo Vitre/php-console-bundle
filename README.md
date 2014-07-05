@@ -61,21 +61,6 @@ vitre_php_console:
         exceptions: true
         forward: true
 
-    # not implemented
-    auto_log:
-        - $_SERVER
-        - $_SESSION
-        - $_REQUEST
-        - demo_logger #custom autolog callback
-
-    # not implemented
-    eval_dispatcher:
-        enabled: true
-        shared:
-            - $_POST
-        open_base_dirs:
-            [%kernel.root_dir%]
-
 ```
 
 Logging
