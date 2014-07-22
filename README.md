@@ -72,4 +72,4 @@ $this->getContainer()->get('vitre_php_console')->log($var);
 
 Temporary file
 --------------
-/app/tmp/vitre_php_console.data
+%kernel.root_dir%/cache/%kernel.environment%/vitre_php_console.data
