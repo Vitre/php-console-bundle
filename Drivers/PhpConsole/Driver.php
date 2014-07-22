@@ -44,25 +44,9 @@ class Driver extends AbstractDriver implements DriverInterface
 
     protected function initSession()
     {
-        $root = $this->initTmpDir();
-        if ($root) {
-            $file = $root . '/vitre_php_console.data';
-            Connector::setPostponeStorage(new \PhpConsole\Storage\File($file));
-        }
-    }
-
-    protected function initTmpDir()
-    {
-        $root = $this->console->getContainer()->get('kernel')->getRootDir() . '/tmp';
-        $ok = is_dir($root);
-        if (!$ok) {
-            $ok = mkdir($root);
-        }
-        if ($ok) {
-            return $root;
-        } else {
-            return false;
-        }
+        $cacheDir = $this->console->getContainer()->get('kenel')->getCacheDir();
+        $file     = $cacheDir . '/vitre_php_console.data';
+        Connector::setPostponeStorage(new \PhpConsole\Storage\File($file));
     }
 
     protected function configure()
