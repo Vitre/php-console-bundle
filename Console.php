@@ -22,7 +22,7 @@ class Console extends ContainerAware
 
         $this->initEnabled();
 
-        if ($this->getEnabled()) {
+        if ($this->enabled()) {
 
             $this->connect();
 
@@ -31,14 +31,25 @@ class Console extends ContainerAware
         return $this;
     }
 
+    public function isDev()
+    {
+        return $this->container->get('kernel')->getEnvironment() === 'dev';
+    }
+
     public function initEnabled()
     {
-        $this->setEnabled($this->container->getParameter('vitre_php_console.enabled'));
+        $enabled = $this->container->getParameter('vitre_php_console.enabled') && $this->isDev();
+        $this->setEnabled($enabled);
     }
 
     public function getEnabled()
     {
         return $this->enabled;
+    }
+
+    public function enabled()
+    {
+        return $this->getEnabled();
     }
 
     public function setEnabled($value)
@@ -56,7 +67,7 @@ class Console extends ContainerAware
 
         }
 
-        return false;
+        return $this;
     }
 
     protected function initDriver()
@@ -67,6 +78,7 @@ class Console extends ContainerAware
         $class = __NAMESPACE__ . '\\Drivers\\' . $driverName . '\\Driver';
 
         if (class_exists($class)) {
+
             $this->driver = new $class($this);
             $this->driver->connect();
 
@@ -84,8 +96,17 @@ class Console extends ContainerAware
 
     public function log()
     {
-        if ($this->getEnabled()) {
+        if ($this->enabled()) {
             return call_user_func_array([$this->getDriver(), 'log'], func_get_args());
+        }
+
+        return false;
+    }
+
+    public function warn()
+    {
+        if ($this->enabled()) {
+            return call_user_func_array([$this->getDriver(), 'warn'], func_get_args());
         }
 
         return false;
@@ -93,7 +114,7 @@ class Console extends ContainerAware
 
     public function table()
     {
-        if ($this->getEnabled()) {
+        if ($this->enabled()) {
             return call_user_func_array([$this->getDriver(), 'table'], func_get_args());
         }
 
@@ -102,7 +123,7 @@ class Console extends ContainerAware
 
     public function group()
     {
-        if ($this->getEnabled()) {
+        if ($this->enabled()) {
             return call_user_func_array([$this->getDriver(), 'group'], func_get_args());
         }
 
@@ -111,7 +132,7 @@ class Console extends ContainerAware
 
     public function groupEnd()
     {
-        if ($this->getEnabled()) {
+        if ($this->enabled()) {
             return call_user_func_array([$this->getDriver(), 'groupEnd'], func_get_args());
         }
 
@@ -120,7 +141,7 @@ class Console extends ContainerAware
 
     public function info()
     {
-        if ($this->getEnabled()) {
+        if ($this->enabled()) {
             return call_user_func_array([$this->getDriver(), 'info'], func_get_args());
         }
 
@@ -134,10 +155,12 @@ class Console extends ContainerAware
 
     public function query($query, $name)
     {
-        $this->group($name);
-        $this->log('[DQL]', $query->getDQL());
-        $this->log('[SQL]', $query->getSQL());
-        $this->groupEnd();
+        if ($this->enabled()) {
+            $this->group($name);
+            $this->log('[DQL]', $query->getDQL());
+            $this->log('[SQL]', $query->getSQL());
+            $this->groupEnd();
+        }
     }
 
 }
