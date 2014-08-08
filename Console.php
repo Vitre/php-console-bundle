@@ -97,7 +97,7 @@ class Console extends ContainerAware
     public function log()
     {
         if ($this->enabled()) {
-            return call_user_func_array([$this->getDriver(), 'log'], func_get_args());
+            return call_user_func_array(array($this->getDriver(), 'log'), func_get_args());
         }
 
         return false;
@@ -106,7 +106,7 @@ class Console extends ContainerAware
     public function warn()
     {
         if ($this->enabled()) {
-            return call_user_func_array([$this->getDriver(), 'warn'], func_get_args());
+            return call_user_func_array(array($this->getDriver(), 'warn'), func_get_args());
         }
 
         return false;
@@ -115,7 +115,7 @@ class Console extends ContainerAware
     public function table()
     {
         if ($this->enabled()) {
-            return call_user_func_array([$this->getDriver(), 'table'], func_get_args());
+            return call_user_func_array(array($this->getDriver(), 'table'), func_get_args());
         }
 
         return false;
@@ -124,7 +124,7 @@ class Console extends ContainerAware
     public function group()
     {
         if ($this->enabled()) {
-            return call_user_func_array([$this->getDriver(), 'group'], func_get_args());
+            return call_user_func_array(array($this->getDriver(), 'group'), func_get_args());
         }
 
         return false;
@@ -133,7 +133,7 @@ class Console extends ContainerAware
     public function groupEnd()
     {
         if ($this->enabled()) {
-            return call_user_func_array([$this->getDriver(), 'groupEnd'], func_get_args());
+            return call_user_func_array(array($this->getDriver(), 'groupEnd'), func_get_args());
         }
 
         return false;
@@ -142,7 +142,7 @@ class Console extends ContainerAware
     public function info()
     {
         if ($this->enabled()) {
-            return call_user_func_array([$this->getDriver(), 'info'], func_get_args());
+            return call_user_func_array(array($this->getDriver(), 'info'), func_get_args());
         }
 
         return false;

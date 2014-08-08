@@ -104,23 +104,23 @@ class Driver extends AbstractDriver implements DriverInterface
     public function log()
     {
         $args = func_get_args();
-        call_user_func_array([$this->connection->getDebugDispatcher(), 'dispatchDebug'], $args);
+        call_user_func_array(array($this->connection->getDebugDispatcher(), 'dispatchDebug'), $args);
 
         return $this;
     }
 
     public function warn() {
-        return call_user_func_array([__CLASS__, 'log'], func_get_args());
+        return call_user_func_array(array(__CLASS__, 'log'), func_get_args());
     }
 
     public function info()
     {
-        return call_user_func_array([__CLASS__, 'log'], func_get_args());
+        return call_user_func_array(array(__CLASS__, 'log'), func_get_args());
     }
 
     public function group()
     {
-        return call_user_func_array([__CLASS__, 'log'], func_get_args());
+        return call_user_func_array(array(__CLASS__, 'log'), func_get_args());
     }
 
     public function groupEnd()
@@ -130,7 +130,7 @@ class Driver extends AbstractDriver implements DriverInterface
 
     public function table()
     {
-        return call_user_func_array([__CLASS__, 'log'], func_get_args());
+        return call_user_func_array(array(__CLASS__, 'log'), func_get_args());
     }
 
 }
