@@ -3,6 +3,10 @@ vitre-php-console-bundle
 
 Symfony PHP console bundle
 
+[![Version](http://img.shields.io/packagist/v/vitre/php-console-bundle.svg)](https://packagist.org/packages/vitre/php-console-bundle)
+[![Downloads](http://img.shields.io/packagist/dm/vitre/php-console-bundle.svg)](https://packagist.org/packages/vitre/php-console-bundle) 
+[![Licence](http://img.shields.io/packagist/l/vitre/php-console-bundle.svg)](https://github.com/Vitre/php-console-bundle/blob/master/LICENSE)
+
 
 Drivers
 -------
