@@ -109,7 +109,8 @@ class Driver extends AbstractDriver implements DriverInterface
         return $this;
     }
 
-    public function warn() {
+    public function warn()
+    {
         return call_user_func_array([__CLASS__, 'log'], func_get_args());
     }
 

@@ -31,25 +31,25 @@ class Console extends ContainerAware
         return $this;
     }
 
-    public function isDev()
-    {
-        return $this->container->get('kernel')->getEnvironment() === 'dev';
-    }
-
     public function initEnabled()
     {
         $enabled = $this->container->getParameter('vitre_php_console.enabled') && $this->isDev();
         $this->setEnabled($enabled);
     }
 
-    public function getEnabled()
+    public function isDev()
     {
-        return $this->enabled;
+        return $this->container->get('kernel')->getEnvironment() === 'dev';
     }
 
     public function enabled()
     {
         return $this->getEnabled();
+    }
+
+    public function getEnabled()
+    {
+        return $this->enabled;
     }
 
     public function setEnabled($value)
@@ -94,15 +94,6 @@ class Console extends ContainerAware
         return $this->container;
     }
 
-    public function log()
-    {
-        if ($this->enabled()) {
-            return call_user_func_array([$this->getDriver(), 'log'], func_get_args());
-        }
-
-        return false;
-    }
-
     public function warn()
     {
         if ($this->enabled()) {
@@ -112,28 +103,15 @@ class Console extends ContainerAware
         return false;
     }
 
+    public function getDriver()
+    {
+        return $this->driver;
+    }
+
     public function table()
     {
         if ($this->enabled()) {
             return call_user_func_array([$this->getDriver(), 'table'], func_get_args());
-        }
-
-        return false;
-    }
-
-    public function group()
-    {
-        if ($this->enabled()) {
-            return call_user_func_array([$this->getDriver(), 'group'], func_get_args());
-        }
-
-        return false;
-    }
-
-    public function groupEnd()
-    {
-        if ($this->enabled()) {
-            return call_user_func_array([$this->getDriver(), 'groupEnd'], func_get_args());
         }
 
         return false;
@@ -148,11 +126,6 @@ class Console extends ContainerAware
         return false;
     }
 
-    public function getDriver()
-    {
-        return $this->driver;
-    }
-
     public function query($query, $name)
     {
         if ($this->enabled()) {
@@ -161,6 +134,33 @@ class Console extends ContainerAware
             $this->log('[SQL]', $query->getSQL());
             $this->groupEnd();
         }
+    }
+
+    public function group()
+    {
+        if ($this->enabled()) {
+            return call_user_func_array([$this->getDriver(), 'group'], func_get_args());
+        }
+
+        return false;
+    }
+
+    public function log()
+    {
+        if ($this->enabled()) {
+            return call_user_func_array([$this->getDriver(), 'log'], func_get_args());
+        }
+
+        return false;
+    }
+
+    public function groupEnd()
+    {
+        if ($this->enabled()) {
+            return call_user_func_array([$this->getDriver(), 'groupEnd'], func_get_args());
+        }
+
+        return false;
     }
 
 }

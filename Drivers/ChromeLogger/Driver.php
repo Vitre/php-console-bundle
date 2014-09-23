@@ -87,7 +87,7 @@ class Driver extends AbstractDriver implements DriverInterface
         return $this->_instance;
     }
 
-    public function _getInstance()
+    protected function _getInstance()
     {
         return \ChromePhp::getInstance();
     }

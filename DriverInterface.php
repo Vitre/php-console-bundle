@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Vitre\PhpConsoleBundle;
 
 interface DriverInterface
