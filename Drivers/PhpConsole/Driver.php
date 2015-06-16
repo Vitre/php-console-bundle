@@ -44,7 +44,7 @@ class Driver extends AbstractDriver implements DriverInterface
 
     protected function initSession()
     {
-        $cacheDir = $this->console->getContainer()->get('kenel')->getCacheDir();
+        $cacheDir = $this->console->getContainer()->get('kernel')->getCacheDir();
         $file     = $cacheDir . '/vitre_php_console.data';
         Connector::setPostponeStorage(new \PhpConsole\Storage\File($file));
     }
