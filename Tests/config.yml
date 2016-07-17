@@ -1,0 +1,5 @@
+vitre_php_console:
+    enabled: true
+    driver: php_console
+    source_base_path: %kernel.root_dir%
+    encoding: utf-8

@@ -2,11 +2,14 @@
 
 namespace Vitre\PhpConsoleBundle;
 
-use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
-class Console extends ContainerAware
+class Console implements ContainerAwareInterface
 {
+    use ContainerAwareTrait;
+
     protected $connection = false;
 
     private $enabled = false;
