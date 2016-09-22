@@ -3,5 +3,5 @@ parameters:
 
 services:
     vitre_php_console:
-        class: %vitre_php_console.console.class%
+        class: "%vitre_php_console.console.class%"
         arguments: ['@service_container']
